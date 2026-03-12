@@ -4,19 +4,69 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SUPERLESS Market</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
-
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      font-family: 'Inter', sans-serif;
-      background: #e8222e;
+      font-family: 'Pretendard Variable', 'Pretendard', sans-serif;
+      background: rgb(30, 0, 255);
       color: #fff;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       position: relative;
+      overflow-x: hidden;
+    }
+
+    /* animated gradient blobs like superless.ai */
+    .bg-gradient {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .bg-gradient .blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.5;
+      animation: float 8s ease-in-out infinite;
+    }
+
+    .blob-1 {
+      width: 600px; height: 600px;
+      background: #ff0000;
+      top: -20%; left: -10%;
+      animation-delay: 0s;
+    }
+
+    .blob-2 {
+      width: 500px; height: 500px;
+      background: #0800ff;
+      top: 30%; right: -15%;
+      animation-delay: -2s;
+    }
+
+    .blob-3 {
+      width: 400px; height: 400px;
+      background: #00ff11;
+      bottom: -10%; left: 30%;
+      animation-delay: -4s;
+    }
+
+    .blob-4 {
+      width: 350px; height: 350px;
+      background: #ffea00;
+      top: 10%; left: 50%;
+      animation-delay: -6s;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(30px, -30px) scale(1.05); }
+      66% { transform: translate(-20px, 20px) scale(0.95); }
     }
 
     /* noise texture overlay */
@@ -24,7 +74,7 @@
       content: '';
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.15'/%3E%3C/svg%3E");
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.12'/%3E%3C/svg%3E");
       background-size: 256px 256px;
       pointer-events: none;
       z-index: 1;
@@ -37,17 +87,25 @@
     }
 
     .logo {
-      font-size: 3rem;
-      font-weight: 900;
-      letter-spacing: -0.03em;
-      line-height: 1;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .logo img {
+      height: 48px;
+      transition: transform 0.3s;
+    }
+
+    .logo img:hover {
+      transform: rotate(-25deg) scale(1.4);
     }
 
     .logo-sub {
       font-size: 0.875rem;
       font-weight: 400;
       opacity: 0.7;
-      margin-top: 4px;
+      margin-top: 8px;
       letter-spacing: 0.05em;
     }
 
@@ -153,7 +211,7 @@
 
     @media (max-width: 480px) {
       header { padding: 24px 20px 0; }
-      .logo { font-size: 2rem; }
+      .logo img { height: 32px; }
       main { padding: 40px 20px; }
       .shelf-rack { padding: 40px 20px; }
       .app-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; padding: 0 20px; }
@@ -161,8 +219,25 @@
   </style>
 </head>
 <body>
+  <div class="bg-gradient">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+    <div class="blob blob-4"></div>
+  </div>
+
   <header>
-    <div class="logo">SUPERLESS</div>
+    <div class="logo">
+      <img src="https://superless.ai/assets/images/superless/s.png" alt="S">
+      <img src="https://superless.ai/assets/images/superless/u.png" alt="U">
+      <img src="https://superless.ai/assets/images/superless/p.png" alt="P">
+      <img src="https://superless.ai/assets/images/superless/e.png" alt="E">
+      <img src="https://superless.ai/assets/images/superless/r.png" alt="R">
+      <img src="https://superless.ai/assets/images/superless/l.png" alt="L">
+      <img src="https://superless.ai/assets/images/superless/e.png" alt="E">
+      <img src="https://superless.ai/assets/images/superless/s.png" alt="S">
+      <img src="https://superless.ai/assets/images/superless/s.png" alt="S">
+    </div>
     <div class="logo-sub">market.superless.ai</div>
   </header>
 
