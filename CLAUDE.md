@@ -117,19 +117,13 @@ jobs:
 
 ## AdSense 설정
 
+- **Publisher ID:** `ca-pub-2865941930849930` (설정 완료)
 - AdSense는 사이트 전체에 1회 등록 (market.superless.ai)
 - 수익은 URL(페이지) 단위로 트래킹 → 앱별 정산 가능
-- wrapper.js가 모든 앱 페이지에 동일한 AdSense 코드 삽입
-- data-ad-client 값은 AdSense 승인 후 wrapper.js에 설정
-
-```javascript
-// wrapper.js에서 삽입하는 AdSense 코드
-const ad = document.createElement('script');
-ad.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js';
-ad.setAttribute('data-ad-client', 'ca-pub-XXXXXXX'); // 나중에 설정
-ad.async = true;
-document.head.appendChild(ad);
-```
+- `wrapper.js`가 모든 앱 페이지에 AdSense 스크립트 + 광고 슬롯 자동 삽입
+- 광고 위치: 상단 바 아래 (슬롯 1) + 페이지 하단 (슬롯 2) — 수동 배치 방식
+- `data-ad-slot`은 현재 `"auto"` → AdSense 대시보드에서 광고 단위 생성 후 실제 슬롯 ID로 교체 필요
+- 앱 HTML에는 `<script src="/template/wrapper.js"></script>` 한 줄만 추가하면 됨
 
 ## 수익 분배 구조
 
