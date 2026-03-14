@@ -25,11 +25,42 @@ export default {
 
     // 앱 Worker로 프록시
     const appUrl = new URL(app.worker_url);
-    const proxyUrl = new URL(request.url);
-    proxyUrl.hostname = appUrl.hostname;
-    proxyUrl.protocol = appUrl.protocol;
-    proxyUrl.pathname = url.pathname.substring(slug.length + 1) || '/';
+    const newPath = url.pathname.substring(slug.length + 1) || '/';
+    const proxyUrl = `${appUrl.origin}${newPath}${url.search}`;
 
-    return fetch(new Request(proxyUrl.toString(), request));
+    const res = await fetch(proxyUrl, {
+      method: request.method,
+      headers: request.headers,
+      body: request.body,
+    });
+
+    // HTML 응답이면 절대경로를 /slug/ 접두사로 rewrite
+    const contentType = res.headers.get('content-type') || '';
+    if (contentType.includes('text/html')) {
+      return new HTMLRewriter()
+        .on('script[src^="/"]', {
+          element(el) {
+            el.setAttribute('src', `/${slug}${el.getAttribute('src')}`);
+          }
+        })
+        .on('link[href^="/"]', {
+          element(el) {
+            el.setAttribute('href', `/${slug}${el.getAttribute('href')}`);
+          }
+        })
+        .on('img[src^="/"]', {
+          element(el) {
+            el.setAttribute('src', `/${slug}${el.getAttribute('src')}`);
+          }
+        })
+        .on('a[href^="/"]', {
+          element(el) {
+            el.setAttribute('href', `/${slug}${el.getAttribute('href')}`);
+          }
+        })
+        .transform(res);
+    }
+
+    return res;
   }
 };
