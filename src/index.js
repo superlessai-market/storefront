@@ -1,4 +1,4 @@
-import apps from '../apps.json';
+import apps from '../public/apps.json';
 
 /**
  * storefront Worker — market.superless.ai

@@ -13,13 +13,10 @@
       background: rgb(30, 0, 255);
       color: #fff;
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
       position: relative;
       overflow-x: hidden;
     }
 
-    /* animated gradient blobs like superless.ai */
     .bg-gradient {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
@@ -35,33 +32,10 @@
       animation: float 8s ease-in-out infinite;
     }
 
-    .blob-1 {
-      width: 600px; height: 600px;
-      background: #ff0000;
-      top: -20%; left: -10%;
-      animation-delay: 0s;
-    }
-
-    .blob-2 {
-      width: 500px; height: 500px;
-      background: #0800ff;
-      top: 30%; right: -15%;
-      animation-delay: -2s;
-    }
-
-    .blob-3 {
-      width: 400px; height: 400px;
-      background: #00ff11;
-      bottom: -10%; left: 30%;
-      animation-delay: -4s;
-    }
-
-    .blob-4 {
-      width: 350px; height: 350px;
-      background: #ffea00;
-      top: 10%; left: 50%;
-      animation-delay: -6s;
-    }
+    .blob-1 { width: 600px; height: 600px; background: #ff0000; top: -20%; left: -10%; }
+    .blob-2 { width: 500px; height: 500px; background: #0800ff; top: 30%; right: -15%; animation-delay: -2s; }
+    .blob-3 { width: 400px; height: 400px; background: #00ff11; bottom: -10%; left: 30%; animation-delay: -4s; }
+    .blob-4 { width: 350px; height: 350px; background: #ffea00; top: 10%; left: 50%; animation-delay: -6s; }
 
     @keyframes float {
       0%, 100% { transform: translate(0, 0) scale(1); }
@@ -69,7 +43,6 @@
       66% { transform: translate(-20px, 20px) scale(0.95); }
     }
 
-    /* noise texture overlay */
     body::before {
       content: '';
       position: fixed;
@@ -80,14 +53,19 @@
       z-index: 1;
     }
 
+    .wrap {
+      position: relative;
+      z-index: 2;
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 60px 32px;
+    }
+
     header {
-      flex: 1;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      position: relative;
-      z-index: 2;
+      margin-bottom: 48px;
     }
 
     .logo {
@@ -113,75 +91,17 @@
       letter-spacing: 0.05em;
     }
 
-    main {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 60px 32px;
-      position: relative;
-      z-index: 2;
-      text-align: center;
-      display: none;
-    }
-
-    .shelf {
-      width: 100%;
-      max-width: 720px;
-    }
-
-    .shelf-label {
-      font-size: 1rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.15em;
-      opacity: 0.5;
-      margin-bottom: 24px;
-    }
-
-    .shelf-rack {
-      border: 2px dashed rgba(255, 255, 255, 0.25);
-      border-radius: 12px;
-      padding: 60px 32px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+    .app-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
       gap: 16px;
     }
 
-    .shelf-icon {
-      font-size: 3rem;
-      opacity: 0.4;
-    }
-
-    .shelf-msg {
-      font-size: 1.25rem;
-      font-weight: 700;
-      opacity: 0.8;
-    }
-
-    .shelf-desc {
-      font-size: 0.875rem;
-      opacity: 0.5;
-      max-width: 400px;
-      line-height: 1.6;
-    }
-
-    /* app grid - ready for when apps arrive */
-    .app-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-      gap: 12px;
-      width: 100%;
-      max-width: 1200px;
-      padding: 0 32px;
-    }
-
     .app-card {
-      background: rgba(255, 255, 255, 0.12);
-      border-radius: 10px;
-      padding: 20px 16px;
+      display: block;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      overflow: hidden;
       text-decoration: none;
       color: #fff;
       transition: transform 0.15s, background 0.15s;
@@ -189,34 +109,35 @@
     }
 
     .app-card:hover {
-      transform: translateY(-3px);
-      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-4px);
+      background: rgba(255, 255, 255, 0.18);
     }
 
-    .app-card h3 {
+    .app-thumb {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      display: block;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .app-info {
+      padding: 14px 16px;
+    }
+
+    .app-name {
       font-size: 0.95rem;
       font-weight: 700;
-      margin-bottom: 6px;
     }
 
-    .app-card p {
-      font-size: 0.75rem;
-      opacity: 0.6;
-      line-height: 1.4;
+    @media (max-width: 720px) {
+      .app-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+      .wrap { padding: 40px 20px; }
+      .logo img { height: 36px; }
     }
 
-    footer {
-      padding: 24px 32px;
-      text-align: center;
-      font-size: 0.75rem;
-      opacity: 0.4;
-      position: relative;
-      z-index: 2;
-    }
-
-    @media (max-width: 480px) {
-      .logo img { height: 32px; }
-      .app-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; padding: 0 20px; }
+    @media (max-width: 420px) {
+      .app-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -228,22 +149,39 @@
     <div class="blob blob-4"></div>
   </div>
 
-  <header>
-    <div class="logo">
-      <img src="https://superless.ai/assets/images/superless/s.png" alt="S">
-      <img src="https://superless.ai/assets/images/superless/u.png" alt="U">
-      <img src="https://superless.ai/assets/images/superless/p.png" alt="P">
-      <img src="https://superless.ai/assets/images/superless/e.png" alt="E">
-      <img src="https://superless.ai/assets/images/superless/r.png" alt="R">
-      <img src="https://superless.ai/assets/images/superless/l.png" alt="L">
-      <img src="https://superless.ai/assets/images/superless/e.png" alt="E">
-      <img src="https://superless.ai/assets/images/superless/s.png" alt="S">
-      <img src="https://superless.ai/assets/images/superless/s.png" alt="S">
-    </div>
-    <div class="logo-sub">market.superless.ai</div>
-  </header>
+  <div class="wrap">
+    <header>
+      <div class="logo">
+        <img src="https://superless.ai/assets/images/superless/s.png" alt="S">
+        <img src="https://superless.ai/assets/images/superless/u.png" alt="U">
+        <img src="https://superless.ai/assets/images/superless/p.png" alt="P">
+        <img src="https://superless.ai/assets/images/superless/e.png" alt="E">
+        <img src="https://superless.ai/assets/images/superless/r.png" alt="R">
+        <img src="https://superless.ai/assets/images/superless/l.png" alt="L">
+        <img src="https://superless.ai/assets/images/superless/e.png" alt="E">
+        <img src="https://superless.ai/assets/images/superless/s.png" alt="S">
+        <img src="https://superless.ai/assets/images/superless/s.png" alt="S">
+      </div>
+      <div class="logo-sub">market.superless.ai</div>
+    </header>
 
-  <main>
-  </main>
+    <div class="app-grid" id="apps"></div>
+  </div>
+
+  <script>
+    fetch('/apps.json')
+      .then(r => r.json())
+      .then(apps => {
+        const grid = document.getElementById('apps');
+        grid.innerHTML = apps.map(app => `
+          <a class="app-card" href="/${app.slug}/">
+            <img class="app-thumb" src="/thumbnails/${app.thumbnail}" alt="${app.name}" onerror="this.style.display='none'">
+            <div class="app-info">
+              <div class="app-name">${app.name}</div>
+            </div>
+          </a>
+        `).join('');
+      });
+  </script>
 </body>
 </html>
