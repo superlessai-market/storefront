@@ -1,5 +1,19 @@
 import apps from '../apps.json';
 
+function findAppBySlug(slug) {
+  return apps.find(a => a.slug === slug);
+}
+
+function proxyToApp(app, pathname, search, request) {
+  const appUrl = new URL(app.worker_url);
+  const proxyUrl = `${appUrl.origin}${pathname}${search}`;
+  return fetch(proxyUrl, {
+    method: request.method,
+    headers: request.headers,
+    body: request.body,
+  });
+}
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
@@ -11,10 +25,21 @@ export default {
     }
 
     // apps.json에서 매칭되는 앱 찾기
-    const app = apps.find(a => a.slug === slug);
+    const app = findAppBySlug(slug);
 
     if (!app) {
-      // 앱이 아니면 정적 파일 시도 (thumbnails 등)
+      // JS에서 절대경로(/models/..., /scan.gif 등)로 요청하는 경우
+      // Referer 헤더로 어느 앱에서 온 요청인지 판단
+      const referer = request.headers.get('referer');
+      if (referer) {
+        try {
+          const refererSlug = new URL(referer).pathname.split('/')[1];
+          const refererApp = findAppBySlug(refererSlug);
+          if (refererApp) {
+            return proxyToApp(refererApp, url.pathname, url.search, request);
+          }
+        } catch (e) {}
+      }
       return env.ASSETS.fetch(request);
     }
 
@@ -24,15 +49,8 @@ export default {
     }
 
     // 앱 Worker로 프록시
-    const appUrl = new URL(app.worker_url);
     const newPath = url.pathname.substring(slug.length + 1) || '/';
-    const proxyUrl = `${appUrl.origin}${newPath}${url.search}`;
-
-    const res = await fetch(proxyUrl, {
-      method: request.method,
-      headers: request.headers,
-      body: request.body,
-    });
+    const res = await proxyToApp(app, newPath, url.search, request);
 
     // HTML 응답이면 절대경로를 /slug/ 접두사로 rewrite
     const contentType = res.headers.get('content-type') || '';
