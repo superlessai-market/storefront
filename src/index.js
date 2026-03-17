@@ -110,16 +110,23 @@ export default {
 
     // 앱 Worker로 프록시
     const subPath = url.pathname.substring(slug.length + 1) || '/';
-    const res = await proxyToApp(app, subPath, url.search, request);
 
-    // HTML이면 절대경로 rewrite (캐시 안 함)
-    if ((res.headers.get('content-type') || '').includes('text/html')) {
-      return rewriteHtml(res, slug);
+    // HTML이 아닌 정적 에셋은 엣지 캐시 (1일)
+    const isHtml = subPath === '/' || subPath.endsWith('.html');
+    if (!isHtml) {
+      const cache = caches.default;
+      const cacheKey = new Request(url.toString(), request);
+      const hit = await cache.match(cacheKey);
+      if (hit) return hit;
+
+      const res = await proxyToApp(app, subPath, url.search, request);
+      const cached = new Response(res.body, res);
+      cached.headers.set('Cache-Control', 'public, max-age=86400, s-maxage=86400');
+      await cache.put(cacheKey, cached.clone());
+      return cached;
     }
 
-    // 정적 에셋은 CDN 캐시 (1일)
-    const cached = new Response(res.body, res);
-    cached.headers.set('Cache-Control', 'public, max-age=86400, s-maxage=86400');
-    return cached;
+    const res = await proxyToApp(app, subPath, url.search, request);
+    return rewriteHtml(res, slug);
   }
 };
