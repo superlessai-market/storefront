@@ -4,5 +4,11 @@
     "slug": "facebattle",
     "worker_url": "https://facebattle.iron-8c6.workers.dev",
     "description": "AI 얼굴 대결"
+  },
+  {
+    "name": "사주 길방 컴패스",
+    "slug": "sajucompass",
+    "worker_url": "https://saju-compass.iron-8c6.workers.dev",
+    "description": "기문둔갑 기반 길방 나침반"
   }
 ]
