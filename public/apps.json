@@ -1,6 +1,6 @@
 [
   {
-    "name": "FaceBattle",
+    "name": "관상 전투력 측정기",
     "slug": "facebattle",
     "worker_url": "https://facebattle.iron-8c6.workers.dev",
     "description": "AI 얼굴 대결"
