@@ -112,11 +112,14 @@ export default {
     const subPath = url.pathname.substring(slug.length + 1) || '/';
     const res = await proxyToApp(app, subPath, url.search, request);
 
-    // HTML이면 절대경로 rewrite
+    // HTML이면 절대경로 rewrite (캐시 안 함)
     if ((res.headers.get('content-type') || '').includes('text/html')) {
       return rewriteHtml(res, slug);
     }
 
-    return res;
+    // 정적 에셋은 CDN 캐시 (1일)
+    const cached = new Response(res.body, res);
+    cached.headers.set('Cache-Control', 'public, max-age=86400, s-maxage=86400');
+    return cached;
   }
 };
