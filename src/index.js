@@ -30,17 +30,13 @@ function getAppFromReferer(request) {
   }
 }
 
-async function proxyToApp(app, path, search, request, cacheTtl) {
+async function proxyToApp(app, path, search, request) {
   const origin = new URL(app.worker_url).origin;
-  const opts = {
+  return fetch(`${origin}${path}${search}`, {
     method: request.method,
     headers: request.headers,
     body: request.body,
-  };
-  if (cacheTtl) {
-    opts.cf = { cacheTtl };
-  }
-  return fetch(`${origin}${path}${search}`, opts);
+  });
 }
 
 function rewriteHtml(response, slug) {
@@ -114,12 +110,10 @@ export default {
 
     // 앱 Worker로 프록시
     const subPath = url.pathname.substring(slug.length + 1) || '/';
-    const isHtml = subPath === '/' || subPath.endsWith('.html');
+    const res = await proxyToApp(app, subPath, url.search, request);
 
-    // 정적 에셋은 cf.cacheTtl로 엣지 캐시 (1일)
-    const res = await proxyToApp(app, subPath, url.search, request, isHtml ? 0 : 86400);
-
-    if (isHtml) {
+    // HTML이면 절대경로 rewrite
+    if ((res.headers.get('content-type') || '').includes('text/html')) {
       return rewriteHtml(res, slug);
     }
 

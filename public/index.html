@@ -175,7 +175,7 @@
         const grid = document.getElementById('apps');
         grid.innerHTML = apps.map(app => `
           <a class="app-card" href="/${app.slug}/">
-            <img class="app-thumb" src="${app.worker_url}/thumbnail.png" alt="${app.name}" loading="lazy" decoding="async" onerror="this.style.display='none'">
+            <img class="app-thumb" src="/${app.slug}/thumbnail.png" alt="${app.name}" onerror="this.style.display='none'">
             <div class="app-info">
               <div class="app-name">${app.name}</div>
             </div>
