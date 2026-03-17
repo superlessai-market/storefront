@@ -887,7 +887,7 @@ Commercial use is exclusively permitted on market.superless.ai
 ### thumbnail.png
 
 - 갤러리 썸네일 (필수)
-- 9:16 비율 권장, CSS에서 자동 크롭
+- 1:1 비율 권장, CSS에서 정사각형으로 자동 크롭 (object-fit: cover, object-position: top)
 - 앱 스크린샷 또는 대표 이미지
 
 ---
@@ -898,7 +898,7 @@ Commercial use is exclusively permitted on market.superless.ai
 
 ```json
 {
-  "name": "앱 표시 이름",
+  "name": "앱 표시 이름 (한국어 가능, 예: 관상 전투력 측정기)",
   "slug": "slug",
   "worker_url": "https://slug.xxx.workers.dev",
   "description": "앱 설명"
