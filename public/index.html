@@ -29,18 +29,36 @@
       border-radius: 50%;
       filter: blur(120px);
       opacity: 0.5;
-      animation: float 8s ease-in-out infinite;
     }
 
-    .blob-1 { width: 600px; height: 600px; background: #ff0000; top: -20%; left: -10%; }
-    .blob-2 { width: 500px; height: 500px; background: #0800ff; top: 30%; right: -15%; animation-delay: -2s; }
-    .blob-3 { width: 400px; height: 400px; background: #00ff11; bottom: -10%; left: 30%; animation-delay: -4s; }
-    .blob-4 { width: 350px; height: 350px; background: #ffea00; top: 10%; left: 50%; animation-delay: -6s; }
+    .blob-1 { width: 800px; height: 800px; top: -20%; left: -10%; animation: float1 12s ease-in-out infinite; }
+    .blob-2 { width: 700px; height: 700px; top: 30%; right: -15%; animation: float2 14s ease-in-out infinite; }
+    .blob-3 { width: 600px; height: 600px; bottom: -10%; left: 30%; animation: float3 10s ease-in-out infinite; }
+    .blob-4 { width: 550px; height: 550px; top: 10%; left: 50%; animation: float4 16s ease-in-out infinite; }
 
-    @keyframes float {
-      0%, 100% { transform: translate(0, 0) scale(1); }
-      33% { transform: translate(30px, -30px) scale(1.05); }
-      66% { transform: translate(-20px, 20px) scale(0.95); }
+    @keyframes float1 {
+      0%, 100% { transform: translate(0, 0) scale(1); background: #ff0000; }
+      25% { transform: translate(200px, -150px) scale(1.4); background: #ff00cc; }
+      50% { transform: translate(-100px, 200px) scale(0.8); background: #ff8800; }
+      75% { transform: translate(150px, -250px) scale(1.25); background: #ff0066; }
+    }
+    @keyframes float2 {
+      0%, 100% { transform: translate(0, 0) scale(1); background: #0800ff; }
+      25% { transform: translate(-250px, 150px) scale(1.35); background: #00ddff; }
+      50% { transform: translate(180px, -200px) scale(0.75); background: #8800ff; }
+      75% { transform: translate(-150px, -100px) scale(1.3); background: #0044ff; }
+    }
+    @keyframes float3 {
+      0%, 100% { transform: translate(0, 0) scale(1); background: #00ff11; }
+      25% { transform: translate(200px, -200px) scale(1.3); background: #00ffaa; }
+      50% { transform: translate(-180px, 150px) scale(0.8); background: #aaff00; }
+      75% { transform: translate(-200px, -150px) scale(1.4); background: #00ff66; }
+    }
+    @keyframes float4 {
+      0%, 100% { transform: translate(0, 0) scale(1); background: #ffea00; }
+      25% { transform: translate(-150px, 200px) scale(0.75); background: #ff6600; }
+      50% { transform: translate(250px, -150px) scale(1.4); background: #ffaa00; }
+      75% { transform: translate(100px, 180px) scale(0.85); background: #ffcc44; }
     }
 
     body::before {

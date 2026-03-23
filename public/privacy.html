@@ -8,18 +8,74 @@
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      background: #f0f2f5;
+      background: rgb(30, 0, 255);
       font-family: 'Pretendard', sans-serif;
-      color: #222;
-      padding: 40px 20px;
+      color: #fff;
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+    .bg-gradient {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .bg-gradient .blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.5;
+    }
+    .blob-1 { width: 600px; height: 600px; top: -20%; left: -10%; animation: float1 12s ease-in-out infinite; }
+    .blob-2 { width: 500px; height: 500px; top: 30%; right: -15%; animation: float2 14s ease-in-out infinite; }
+    .blob-3 { width: 400px; height: 400px; bottom: -10%; left: 30%; animation: float3 10s ease-in-out infinite; }
+    .blob-4 { width: 350px; height: 350px; top: 10%; left: 50%; animation: float4 16s ease-in-out infinite; }
+    @keyframes float1 {
+      0%, 100% { transform: translate(0, 0) scale(1); background: #ff0000; }
+      25% { transform: translate(200px, -150px) scale(1.15); background: #ff00cc; }
+      50% { transform: translate(-100px, 200px) scale(0.9); background: #ff8800; }
+      75% { transform: translate(150px, -250px) scale(1.1); background: #ff0066; }
+    }
+    @keyframes float2 {
+      0%, 100% { transform: translate(0, 0) scale(1); background: #0800ff; }
+      25% { transform: translate(-250px, 150px) scale(1.1); background: #00ddff; }
+      50% { transform: translate(180px, -200px) scale(0.85); background: #8800ff; }
+      75% { transform: translate(-150px, -100px) scale(1.12); background: #0044ff; }
+    }
+    @keyframes float3 {
+      0%, 100% { transform: translate(0, 0) scale(1); background: #00ff11; }
+      25% { transform: translate(200px, -200px) scale(1.1); background: #00ffaa; }
+      50% { transform: translate(-180px, 150px) scale(0.9); background: #aaff00; }
+      75% { transform: translate(-200px, -150px) scale(1.08); background: #00ff66; }
+    }
+    @keyframes float4 {
+      0%, 100% { transform: translate(0, 0) scale(1); background: #ffea00; }
+      25% { transform: translate(-150px, 200px) scale(0.9); background: #ff6600; }
+      50% { transform: translate(250px, -150px) scale(1.15); background: #ffaa00; }
+      75% { transform: translate(100px, 180px) scale(0.92); background: #ffcc44; }
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.12'/%3E%3C/svg%3E");
+      background-size: 256px 256px;
+      pointer-events: none;
+      z-index: 1;
     }
     .container {
+      position: relative;
+      z-index: 2;
       max-width: 700px;
       margin: 0 auto;
-      background: #fff;
+      padding: 40px 20px;
+    }
+    .card {
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(12px);
       border-radius: 12px;
       padding: 40px 32px;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
     }
     .lang-bar {
       display: flex;
@@ -28,7 +84,8 @@
       flex-wrap: wrap;
     }
     .lang-btn {
-      background: #e8e8e8;
+      background: rgba(255,255,255,0.15);
+      color: #fff;
       border: none;
       padding: 5px 14px;
       border-radius: 20px;
@@ -38,24 +95,30 @@
       transition: all 0.2s;
     }
     .lang-btn.active {
-      background: #222;
-      color: #fff;
+      background: #fff;
+      color: #222;
     }
     .lang-section { display: none; }
     .lang-section.active { display: block; }
-    h1 { font-size: 1.8rem; margin-bottom: 8px; color: #000; }
-    h2 { font-size: 1.2rem; margin-top: 28px; margin-bottom: 8px; color: #000; }
-    p, li { font-size: 0.95rem; line-height: 1.8; color: #333; }
+    h1 { font-size: 1.8rem; margin-bottom: 8px; color: #fff; }
+    h2 { font-size: 1.2rem; margin-top: 28px; margin-bottom: 8px; color: #fff; }
+    p, li { font-size: 0.95rem; line-height: 1.8; color: rgba(255,255,255,0.85); }
     ul { margin-left: 20px; margin-bottom: 12px; }
-    .updated { color: #999; font-size: 0.85rem; margin-bottom: 24px; }
-    a { color: #333; }
-    a:hover { color: #000; }
-    .back { display: inline-block; margin-top: 32px; color: #333; font-weight: bold; text-decoration: none; }
-    .back:hover { color: #000; text-decoration: underline; }
+    .updated { color: rgba(255,255,255,0.5); font-size: 0.85rem; margin-bottom: 24px; }
+    a { color: rgba(255,255,255,0.9); }
+    a:hover { color: #fff; }
+    .back { display: inline-block; margin-top: 32px; color: rgba(255,255,255,0.9); font-weight: bold; text-decoration: none; }
+    .back:hover { color: #fff; text-decoration: underline; }
   </style>
 </head>
 <body>
-  <div class="container">
+  <div class="bg-gradient">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+    <div class="blob blob-4"></div>
+  </div>
+  <div class="container"><div class="card">
     <div class="lang-bar">
       <button class="lang-btn active" onclick="switchLang('en')">English</button>
       <button class="lang-btn" onclick="switchLang('ko')">한국어</button>
@@ -258,7 +321,7 @@
       </ul>
       <a href="./" class="back">&larr; 返回首页</a>
     </div>
-  </div>
+  </div></div>
 
   <script>
     function switchLang(lang) {
