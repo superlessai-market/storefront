@@ -1,6 +1,6 @@
 # 새 앱 셋업 프롬프트
 
-market.superless.ai에 새 앱을 추가할 때 이 문서를 Claude에게 전달하세요.
+superless.app에 새 앱을 추가할 때 이 문서를 Claude에게 전달하세요.
 아래 규칙에 따라 필요한 파일들을 생성합니다.
 
 ---
@@ -851,7 +851,7 @@ AdSense가 앱만 있는 페이지를 "콘텐츠 부족(thin content)"으로 거
 ### 링크 규칙
 
 - **모든 내부 링크는 상대경로** 사용 (`privacy.html`, `terms.html`, `./`)
-- **절대경로(`/`) 사용 금지** — market.superless.ai/slug/ 하위 배포이므로 루트로 빠짐
+- **절대경로(`/`) 사용 금지** — superless.app/slug/ 하위 배포이므로 루트로 빠짐
 - 돌아가기 링크: `href="./"`
 
 ---
@@ -939,8 +939,8 @@ npx serve .
 This work is licensed under CC BY-NC-ND 4.0
 https://creativecommons.org/licenses/by-nc-nd/4.0/
 
-Commercial use is exclusively permitted on market.superless.ai
-(c) Superless (superless.ai)
+Commercial use is exclusively permitted on superless.app
+(c) Superless (superless.app)
 ```
 
 ### thumbnail.png
@@ -987,5 +987,5 @@ Commercial use is exclusively permitted on market.superless.ai
 [ ] 10. npx wrangler deploy → .workers.dev URL 확인
 [ ] 11. storefront/public/apps.json에 항목 추가
 [ ] 12. storefront 커밋 푸시 (자동 배포)
-[ ] 13. market.superless.ai/slug/ 접속 확인
+[ ] 13. superless.app/slug/ 접속 확인
 ```

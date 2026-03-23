@@ -1,7 +1,7 @@
 import apps from '../public/apps.json';
 
 /**
- * storefront Worker — market.superless.ai
+ * storefront Worker — superless.app
  *
  * 라우팅:
  *   /              → 갤러리 페이지 (public/)

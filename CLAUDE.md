@@ -1,25 +1,25 @@
-# CLAUDE.md — market.superless.ai
+# CLAUDE.md — superless.app
 
 ## 프로젝트 개요
 
 Superless AI 워크샵에서 참가자들과 함께 프롬프팅으로 만든 SPA를 모아서 보여주는 앱 마켓 플랫폼.
 각 앱에 Google AdSense를 붙여 광고 수익을 기여자들과 나눈다.
 
-- **URL:** market.superless.ai
+- **URL:** superless.app
 - **호스팅:** Cloudflare Workers (Pages는 deprecated, Workers로 통일)
-- **Cloudflare 계정:** superless.ai 도메인이 있는 계정에서 모든 프로젝트 관리
+- **Cloudflare 계정:** superless.app 도메인이 있는 계정에서 모든 프로젝트 관리
 - **이 리포:** `superlessai-market/storefront` — 갤러리 + 라우팅 Worker
 - **앱 리포:** `superlessai-market/` org 아래 앱마다 별도 리포 + 별도 Worker
 
 ## URL 구조
 
 ```
-market.superless.ai/                → 갤러리
-market.superless.ai/facebattle      → FaceBattle 앱
-market.superless.ai/kyoto-guide     → 교토 여행 가이드 앱
+superless.app/                → 갤러리
+superless.app/facebattle      → FaceBattle 앱
+superless.app/kyoto-guide     → 교토 여행 가이드 앱
 ```
 
-서브도메인 안 씀. 중간 경로(/apps/ 등) 없음. `market.superless.ai/앱이름`으로 직접 접근.
+서브도메인 안 씀. 중간 경로(/apps/ 등) 없음. `superless.app/앱이름`으로 직접 접근.
 
 ## 리포 구조
 
@@ -75,7 +75,7 @@ storefront Worker(src/index.js)가 모든 요청을 받아서 처리:
 | 필드 | 설명 |
 |------|------|
 | `name` | 갤러리에 표시되는 앱 이름 |
-| `slug` | URL 경로 (market.superless.ai/{slug}) |
+| `slug` | URL 경로 (superless.app/{slug}) |
 | `worker_url` | 앱 Worker의 .workers.dev 주소 |
 | `description` | 앱 설명 (현재 갤러리 미사용, 추후 확장용) |
 
@@ -117,8 +117,8 @@ not_found_handling = "single-page-application"
 This work is licensed under CC BY-NC-ND 4.0
 https://creativecommons.org/licenses/by-nc-nd/4.0/
 
-Commercial use is exclusively permitted on market.superless.ai
-© Superless (superless.ai)
+Commercial use is exclusively permitted on superless.app
+© Superless (superless.app)
 ```
 
 ## 앱 추가 체크리스트
@@ -138,7 +138,7 @@ Commercial use is exclusively permitted on market.superless.ai
          "description": "앱 설명"
        }
 [ ] 8. storefront 커밋 푸시 (자동 배포)
-[ ] 9. market.superless.ai/슬러그/ 접속 확인
+[ ] 9. superless.app/슬러그/ 접속 확인
 ```
 
 ### slug 규칙
@@ -150,7 +150,7 @@ Commercial use is exclusively permitted on market.superless.ai
 ## AdSense 설정
 
 - **Publisher ID:** `ca-pub-2865941930849930`
-- `superless.ai`로 등록 → `market.superless.ai` 하위 모든 경로 커버
+- `superless.app`으로 등록 → `superless.app` 하위 모든 경로 커버
 - 각 앱 HTML에 AdSense 스크립트 직접 포함
 - 수익은 URL 경로별로 트래킹 가능 (`/facebattle`, `/kyoto-guide` 등)
 - storefront 갤러리 페이지(루트)에는 광고 없음
@@ -168,7 +168,7 @@ Commercial use is exclusively permitted on market.superless.ai
 
 - 참가자는 코드를 모르고 GitHub도 안 씀. 모든 배포는 호호님이 처리.
 - 각 앱은 완전히 독립된 Worker. 한 앱이 깨져도 다른 앱에 영향 없음.
-- Cloudflare 프로젝트는 반드시 superless.ai가 있는 계정에서 생성.
-- 커스텀 도메인은 storefront(market.superless.ai)에만 설정. 각 앱은 .workers.dev URL 사용.
+- Cloudflare 프로젝트는 반드시 superless.app이 있는 계정에서 생성.
+- 커스텀 도메인은 storefront(superless.app)에만 설정. 각 앱은 .workers.dev URL 사용.
 - GitHub Action 사용 안 함. 리포 간 의존성 없음.
 - storefront Worker 프록시가 HTMLRewriter + Referer 기반으로 앱 내부 경로를 처리함.
